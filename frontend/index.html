@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<!-- here maybe u should make something dynamic like an INPUT to the user can overwrithe the target url -->
+
+<body>
+  <script>
+    // this is the target URL, your server with the url param from the client
+    fetch('http://localhost:3000/?url=https://www.w3schools.com/')
+      .then(response => response.text())
+      .then(html => {
+        // Use the HTML content as needed
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Create a new div element and set its innerHTML to the HTML content
+        const div = document.createElement('div');
+        div.innerHTML = html;
+
+        // Append the div element to the main document
+        document.body.appendChild(div);
+
+        // Add a click event listener to the div element to detect user clicks
+        div.addEventListener('click', event => {
+          event.preventDefault()
+          console.log('User clicked on element:', event.target);
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  </script>
+</body>
+
+</html>
